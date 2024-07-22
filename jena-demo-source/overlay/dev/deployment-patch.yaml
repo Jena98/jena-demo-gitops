@@ -29,12 +29,12 @@ spec:
               cpu: "10m"
               memory: "400Mi"
           # Health Check    
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 10
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health/liveness
+          #     port: 8080
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
           # readinessProbe:
           #   httpGet:
           #     path: /actuator/health/readiness
