@@ -47,3 +47,8 @@ spec:
                 operator: In
                 values:
                 - ops
+      tolerations:
+        - effect: NoSchedule
+          key: role
+          operator: Equal
+          value: ops
