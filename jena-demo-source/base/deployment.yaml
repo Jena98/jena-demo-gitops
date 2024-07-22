@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jena-demo-source
+  labels:
+    app: jena-demo-source
+spec:
+  selector:
+    matchLabels:
+      app: jena-demo-source
+  template:
+    metadata:
+      labels:
+        app: jena-demo-source
+    spec:
+      containers:
+      - name: jena-demo-source
+        image: nginx

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo
+patches:
+- path: deployment-patch.yaml
+- path: service-patch.yaml
+resources:
+- ../../base
+- hpa.yaml
+images:
+- name: 712440397331.dkr.ecr.ap-northeast-2.amazonaws.com/jena-demo-ecr
