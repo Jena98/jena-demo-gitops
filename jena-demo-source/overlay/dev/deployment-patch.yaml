@@ -3,13 +3,14 @@ kind: Deployment
 metadata:
   name: jena-demo-source
 spec:
-  # minReadySeconds: 10
-  # # Graceful Shutdown 설정
-  # strategy:
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxSurge: 1
-  #     maxUnavailable: 0  
+  revisionHistoryLimit: 5
+  minReadySeconds: 10
+  # Graceful Shutdown 설정
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     spec:
       restartPolicy: Always
@@ -23,36 +24,36 @@ spec:
           # QoS 타입 Guaranteed  
           resources:
             limits:
-              cpu: "10m"
-              memory: "400Mi"            
+              cpu: 1
+              memory: 1.5Gi
             requests:
-              cpu: "10m"
-              memory: "400Mi"
+              cpu: 1
+              memory: 1.5Gi
           # Health Check    
-          # livenessProbe:
-          #   httpGet:
-          #     path: /actuator/health/liveness
-          #     port: 8080
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          # readinessProbe:
-          #   httpGet:
-          #     path: /actuator/health/readiness
-          #     port: 8080
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 30
-          #   failureThreshold: 3
-          #   successThreshold: 1
-          #   timeoutSeconds: 5            
-          # Graceful Shutdown 설정                 
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+            successThreshold: 1
+            timeoutSeconds: 5
+          # Graceful Shutdown 설정               
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sh", "-c", "sleep 20"]
+                command: ["/bin/sh", "-c", "sleep 20"]                    
           # ENV 설정      
-          # env:
-          #   - name: ENV
-          #     value: "DEV"
+          env:
+          - name: ENV
+            value: "DEV"
       # 스케줄링 설정                       
       affinity:
         podAntiAffinity:
