@@ -9,4 +9,4 @@ resources:
 - hpa.yaml
 images:
 - name: 712440397331.dkr.ecr.ap-northeast-2.amazonaws.com/jena-demo-ecr
-  newTag: prod2672b2a
+  newTag: prodd271590
