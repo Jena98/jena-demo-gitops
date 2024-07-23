@@ -13,6 +13,7 @@ spec:
       maxUnavailable: 0
   template:
     spec:
+      # root로 실행하지 않도록 securityContext 설정
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000

@@ -13,6 +13,11 @@ spec:
       maxUnavailable: 0
   template:
     spec:
+      # root로 실행하지 않도록 securityContext 설정
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
       restartPolicy: Always
       containers:
         - name: jena-demo-source
@@ -29,27 +34,14 @@ spec:
             requests:
               cpu: 1
               memory: 1.5Gi
-          # Health Check    
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              port: 8080
-            initialDelaySeconds: 30
-            periodSeconds: 30
-            failureThreshold: 3
-            successThreshold: 1
-            timeoutSeconds: 5
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false          
           # Graceful Shutdown 설정               
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sh", "-c", "sleep 20"]                    
+                command: ["/bin/sh", "-c", "sleep 20"]             
           # ENV 설정      
           env:
           - name: ENV
